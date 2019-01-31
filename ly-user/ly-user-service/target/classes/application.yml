@@ -1,0 +1,37 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/leyou
+    username: root
+    password: zx7465902
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    host: 192.168.83.128
+  rabbitmq:
+    host: 192.168.83.128
+    username: xiangxiao
+    password: zx7465902
+    virtual-host: /leyou
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    instance-id: ${eureka.instance.ip-address}.${server.port}
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+
+mybatis:
+  type-aliases-package: com.leyou.item.pojo
+
+ly:
+  user:
+    exchange: ly.sms.exchange # 交换机名称
+    routingKey: sms.verify.code # 路由key
+    timeOutInMinutes: 5 # 验证码过期时长，单位：分钟
