@@ -5,9 +5,13 @@ import com.github.pagehelper.PageInfo;
 import com.leyou.common.enums.ExceptionEnum;
 import com.leyou.common.exception.LyException;
 import com.leyou.common.vo.PageResult;
+import com.leyou.item.dto.BrandProductDto;
 import com.leyou.item.mapper.BrandMapper;
 import com.leyou.item.pojo.Brand;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +20,9 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
+@Slf4j
 @Service
 @Transactional
 public class BrandService {
@@ -24,6 +30,7 @@ public class BrandService {
     @Autowired
     private BrandMapper brandMapper;
 
+    //private static final Logger logger = LoggerFactory.getLogger(BrandService.class);
     /**
      * 分页查询品牌
      * @param page
@@ -142,5 +149,25 @@ public class BrandService {
             throw new LyException(ExceptionEnum.BRAND_NOT_FOUND);
         }
         return brands;
+    }
+
+    public List<BrandProductDto> queryBrandProduct() {
+        List<BrandProductDto> list = brandMapper.queryBrandProduct();
+        if (CollectionUtils.isEmpty(list)) {
+            throw new LyException(ExceptionEnum.BRAND_NOT_FOUND);
+        }
+        Scanner sc = new Scanner(System.in);
+        String str = sc.next();
+        String[] strings = str.split(" ");
+
+        return list;
+    }
+
+    public List<BrandProductDto> queryOrderNumByDay() {
+        List<BrandProductDto> list = brandMapper.queryOrderNumByDay();
+        if (CollectionUtils.isEmpty(list)) {
+            throw new LyException(ExceptionEnum.ORDER_NOT_FOUND);
+        }
+        return list;
     }
 }

@@ -1,6 +1,7 @@
 package com.leyou.item.mapper;
 
 import com.leyou.common.mapper.BaseMapper;
+import com.leyou.item.dto.BrandProductDto;
 import com.leyou.item.pojo.Brand;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -19,4 +20,10 @@ public interface BrandMapper extends BaseMapper<Brand> {
 
     @Select("select b.id,b.`name` from tb_brand b INNER JOIN tb_category_brand cb on b.id = cb.brand_id WHERE cb.category_id = #{cid}")
     List<Brand> queryBrandByCid(@Param("cid") Long cid);
+
+    @Select("SELECT COUNT(*) AS value, b.`name` AS name FROM tb_brand b, tb_spu s WHERE b.id = s.brand_id GROUP BY b.id")
+    List<BrandProductDto> queryBrandProduct();
+
+    @Select("SELECT DATE_FORMAT(create_time,'%Y-%m-%d') AS name,COUNT(order_id) AS value FROM tb_order GROUP BY DATE_FORMAT(create_time,'%Y-%m-%d')")
+    List<BrandProductDto> queryOrderNumByDay();
 }

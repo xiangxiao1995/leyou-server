@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   application:
-    name: Item-service
+    name: item-service
   datasource:
     url: jdbc:mysql://localhost:3306/leyou
     username: root
@@ -36,3 +36,7 @@ eureka:
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql语句
+ly:
+  jwt:
+    pubKeyPath: D:/Data/code/rsa.pub # 公钥地址
+    serviceToken: SERVICE_TOKEN

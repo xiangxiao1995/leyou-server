@@ -1,6 +1,7 @@
 package com.leyou.item.web;
 
 import com.leyou.common.vo.PageResult;
+import com.leyou.item.dto.BrandProductDto;
 import com.leyou.item.pojo.Brand;
 import com.leyou.item.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,11 +96,25 @@ public class BrandController {
 
     /**
      * 根据品牌id集合查询品牌集合
-     * @param ids
-     * @return
+     * @param ids id集合
+     * @return List<Brand>
      */
     @GetMapping("list")
     public ResponseEntity<List<Brand>> queryBrandByIds(@RequestParam("ids") List<Long> ids) {
         return ResponseEntity.ok(brandService.queryBrandByIds(ids));
+    }
+
+    /**
+     * 获取所有品牌以及品牌下辖的商品数
+     * @return List<BrandProductDto>
+     */
+    @GetMapping("/chart/brand")
+    public ResponseEntity<List<BrandProductDto>> queryBrandProduct() {
+        return ResponseEntity.ok(brandService.queryBrandProduct());
+    }
+
+    @GetMapping("/chart/order")
+    public ResponseEntity<List<BrandProductDto>> queryOrderNumByDay() {
+        return ResponseEntity.ok(brandService.queryOrderNumByDay());
     }
 }
